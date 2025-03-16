@@ -1,44 +1,84 @@
 import 'package:flutter/material.dart';
-import '../widgets/sidebar.dart';
-import '../widgets/top_bar.dart';
-import '../widgets/info_card.dart';
-import '../widgets/room_section.dart';
+import '../widgets/robot_stats_card.dart';
 
-class DashboardScreen extends StatelessWidget {
+class DashboardScreen extends StatefulWidget {
+  const DashboardScreen({super.key});
+
+  @override
+  _DashboardScreenState createState() => _DashboardScreenState();
+}
+
+class _DashboardScreenState extends State<DashboardScreen> {
+  // List of robots with their stats
+  final List<Map<String, String>> robots = [
+    {"name": "Robot A", "usage": "22 Keyboards cleaned", "power": "65% Power remaining"},
+    {"name": "Robot B", "usage": "15 Keyboards cleaned", "power": "80% Power remaining"},
+    {"name": "Robot C", "usage": "30 Keyboards cleaned", "power": "50% Power remaining"},
+  ];
+
+  String selectedRobot = "Robot A"; // Default robot selection
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Row(
+    // Get the selected robot's stats
+    final robotStats = robots.firstWhere((robot) => robot["name"] == selectedRobot);
+
+    return SingleChildScrollView(
+      padding: const EdgeInsets.all(16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Sidebar(), // Left-side navigation
-          Expanded(
-            flex: 4,
-            child: Column(
-              children: [
-                TopBar(), // Top header
-                Expanded(
-                  child: SingleChildScrollView(
-                    padding: EdgeInsets.all(16),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text("Good Afternoon, Admin!", style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
-                        SizedBox(height: 20),
-                        Row(
-                          children: [
-                            Expanded(child: InfoCard(title: "Usage Status", value: "22 Keyboards cleaned")),
-                            SizedBox(width: 16),
-                            Expanded(child: InfoCard(title: "Power Status", value: "65% Power remaining")),
-                          ],
-                        ),
-                        SizedBox(height: 20),
-                        MeetingRoomSection(), // Meeting room bookings
-                      ],
-                    ),
-                  ),
-                ),
-              ],
+          // Welcome Message
+          const Text(
+            "Good Afternoon, Admin!",
+            style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(height: 20),
+
+          Card(
+            elevation: 3, // Adds a shadow effect
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12),
             ),
+            child: Padding(
+              padding: const EdgeInsets.all(16),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text(
+                    "Select Robot:",
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  ),
+                  DropdownButton<String>(
+                    value: selectedRobot,
+                    onChanged: (newValue) {
+                      setState(() {
+                        selectedRobot = newValue!;
+                      });
+                    },
+                    items: robots.map<DropdownMenuItem<String>>((robot) {
+                      return DropdownMenuItem<String>(
+                        value: robot["name"],
+                        child: Text(
+                          robot["name"]!,
+                          style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                        ),
+                      );
+                    }).toList(),
+                  ),
+                ],
+              ),
+            ),
+          ),
+
+
+          const SizedBox(height: 20),
+
+          // Display the selected robot's stats using the custom widget
+          RobotStatsCard(
+            robotName: robotStats["name"]!,
+            usageStatus: robotStats["usage"]!,
+            powerStatus: robotStats["power"]!,
           ),
         ],
       ),

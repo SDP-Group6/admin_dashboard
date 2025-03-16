@@ -1,69 +1,86 @@
 import 'package:flutter/material.dart';
+import '../screens/dashboard_screen.dart';
+import '../screens/rooms_screen.dart';
+import '../screens/documents_screen.dart';
+import '../screens/settings_screen.dart';
 
 class Sidebar extends StatelessWidget {
+  final Function(Widget, String) onItemSelected;
+
+  const Sidebar({super.key, required this.onItemSelected});
+
   @override
   Widget build(BuildContext context) {
     return Container(
       width: 250,
       color: Colors.white,
-      padding: EdgeInsets.all(16),
+      padding: const EdgeInsets.all(16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text("Logo", style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
-          SizedBox(height: 30),
-          SidebarItem(title: "Dashboard", icon: Icons.dashboard),
-          SidebarItem(title: "Scheduled Jobs", icon: Icons.calendar_today),
-          SidebarItem(title: "Documents", icon: Icons.folder),
-          SidebarItem(title: "Settings", icon: Icons.settings),
+          const Text(
+            "CleanCaps",
+            style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(height: 30),
+
+          SidebarItem(
+            title: "Dashboard",
+            icon: Icons.dashboard,
+            onTap: () => onItemSelected(const DashboardScreen(), "Dashboard"),
+          ),
+          SidebarItem(
+            title: "Rooms",
+            icon: Icons.room,
+            onTap: () => onItemSelected(const RoomsScreen(), "Rooms"),
+          ),
+          SidebarItem(
+            title: "Documents",
+            icon: Icons.folder,
+            onTap: () => onItemSelected(const DocumentsScreen(), "Documents"),
+          ),
+          SidebarItem(
+            title: "Settings",
+            icon: Icons.settings,
+            onTap: () => onItemSelected(const SettingsScreen(), "Settings"),
+          ),
         ],
       ),
     );
   }
 }
 
-class SidebarItem extends StatefulWidget {
+class SidebarItem extends StatelessWidget {
   final String title;
   final IconData icon;
+  final VoidCallback onTap;
 
-  SidebarItem({required this.title, required this.icon});
-
-  @override
-  _SidebarItemState createState() => _SidebarItemState();
-}
-
-class _SidebarItemState extends State<SidebarItem> {
-  bool _isHovered = false;
+  const SidebarItem({
+    super.key,
+    required this.title,
+    required this.icon,
+    required this.onTap,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return MouseRegion(
-      onEnter: (_) => setState(() => _isHovered = true),
-      onExit: (_) => setState(() => _isHovered = false),
-      child: Stack(
-        children: [
-          // Background animation for left-to-right fill effect
-          AnimatedContainer(
-            duration: Duration(milliseconds: 200), // Fast animation
-            width: _isHovered ? 250 : 0, // Expands from 0 to full width
-            height: 40, // Consistent height
-            decoration: BoxDecoration(
-              color: Colors.grey[300],
-              borderRadius: BorderRadius.circular(8),
-            ),
+    return Material(
+      color: Colors.transparent, // Ensures ripple effect blends with background
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(8),
+        splashColor: Colors.blue.withOpacity(0.3),
+        highlightColor: Colors.blue.withOpacity(0.2),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
+          child: Row(
+            children: [
+              Icon(icon, size: 24),
+              const SizedBox(width: 10),
+              Text(title, style: const TextStyle(fontSize: 16)),
+            ],
           ),
-          // Sidebar content (icon + text)
-          Container(
-            padding: EdgeInsets.symmetric(vertical: 12, horizontal: 8),
-            child: Row(
-              children: [
-                Icon(widget.icon, size: 24),
-                SizedBox(width: 10),
-                Text(widget.title, style: TextStyle(fontSize: 16)),
-              ],
-            ),
-          ),
-        ],
+        ),
       ),
     );
   }
