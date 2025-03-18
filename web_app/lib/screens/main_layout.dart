@@ -25,7 +25,16 @@ class _MainLayoutState extends State<MainLayout> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context); // Access the theme
+
+    // Extract border color from theme, fallback to black if not set
+    final Color borderColor =
+        theme.cardTheme.shape is RoundedRectangleBorder
+            ? (theme.cardTheme.shape as RoundedRectangleBorder).side.color
+            : Colors.black;
+
     return Scaffold(
+      backgroundColor: theme.scaffoldBackgroundColor, // Themed background
       body: Row(
         children: [
           Sidebar(onItemSelected: _navigateTo), // Sidebar for navigation
@@ -33,9 +42,53 @@ class _MainLayoutState extends State<MainLayout> {
             flex: 4,
             child: Column(
               children: [
-                TopBar(title: _pageTitle), // Dynamic Top Bar Title
+                Container(
+                  decoration: BoxDecoration(
+                    color: theme.cardTheme.color, // Themed background
+                    borderRadius: BorderRadius.circular(12),
+                    border: Border.all(
+                      color: borderColor,
+                      width: 2,
+                    ), // Themed border
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black12.withOpacity(0.05),
+                        spreadRadius: 2,
+                        blurRadius: 5,
+                      ),
+                    ],
+                  ),
+                  margin: const EdgeInsets.all(12.0),
+                  padding: const EdgeInsets.all(16.0),
+                  child: TopBar(
+                    title: _pageTitle,
+                  ), // Top Bar inside bordered container
+                ),
                 Expanded(
-                  child: _selectedPage, // Dynamic Page Content
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: theme.cardTheme.color, // Themed background
+                      borderRadius: BorderRadius.circular(12),
+                      border: Border.all(
+                        color: borderColor,
+                        width: 2,
+                      ), // Themed border
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black12.withOpacity(0.05),
+                          spreadRadius: 2,
+                          blurRadius: 5,
+                        ),
+                      ],
+                    ),
+                    margin: const EdgeInsets.all(
+                      12.0,
+                    ), // Adds spacing around the content
+                    padding: const EdgeInsets.all(
+                      16.0,
+                    ), // Standard padding inside
+                    child: _selectedPage, // Dynamic Page Content
+                  ),
                 ),
               ],
             ),
