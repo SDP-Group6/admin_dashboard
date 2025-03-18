@@ -9,7 +9,7 @@ class InfoCard extends StatelessWidget {
     super.key,
     required this.title,
     required this.value,
-    this.backgroundColor = Colors.white, // Default background color
+    this.backgroundColor = Colors.white,
   });
 
   @override
@@ -27,19 +27,19 @@ class InfoCard extends StatelessWidget {
           Text(
             title,
             style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.grey[800], // Slightly darker text
-                ),
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+              color: Colors.grey[800],
+            ),
           ),
           const SizedBox(height: 8),
           Text(
             value,
             style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
-                ),
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+              color: Colors.black,
+            ),
           ),
         ],
       ),

@@ -2,47 +2,58 @@ import 'package:flutter/material.dart';
 
 class AppTheme {
   static ThemeData lightTheme = ThemeData(
-    primaryColor: Colors.blue, // Deprecated in Material3 but kept for reference
-    useMaterial3: true, // Enables Material 3 design
+    primaryColor: const Color(0xFFB3CDE0), // Light pastel blue
 
-    scaffoldBackgroundColor: Colors.grey[200],
+    useMaterial3: true,
+
+    scaffoldBackgroundColor: const Color(0xFFF7F7F7), // Soft off-white
 
     textTheme: const TextTheme(
-      titleLarge: TextStyle(fontSize: 24, fontWeight: FontWeight.bold), // Replaces headline6
-      bodyLarge: TextStyle(fontSize: 16), // Replaces bodyText1
+      titleLarge: TextStyle(
+        fontSize: 24,
+        fontWeight: FontWeight.bold,
+        color: Color(0xFF5D5D5D),
+      ), // Dark pastel gray
+      bodyLarge: TextStyle(
+        fontSize: 16,
+        color: Color(0xFF5D5D5D),
+      ), // Consistent text color
     ),
 
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
-        backgroundColor: Colors.blue, // Primary button color
-        foregroundColor: Colors.white, // Text color
+        backgroundColor: Color(0xFFB3CDE0), // Pastel blue button
+        foregroundColor: Color(0xFF354F52), // Dark text color
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
       ),
     ),
 
     cardTheme: CardTheme(
-      color: Colors.white,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      color: const Color(0xFFFAFAFA), // Light pastel gray background
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(12),
+        side: const BorderSide(
+          color: Colors.black,
+          width: 2,
+        ), // **Dark black border**
+      ),
       elevation: 3,
       shadowColor: Colors.black12, // Ensures consistent shadow effect
     ),
 
     appBarTheme: const AppBarTheme(
-      backgroundColor: Colors.blue,
-      foregroundColor: Colors.white, // Title & icon colors
+      backgroundColor: Color(0xFFB3CDE0), // Pastel blue
+      foregroundColor: Colors.white, // White text/icons
       elevation: 0,
       centerTitle: true,
     ),
 
-    dividerTheme: const DividerThemeData(
-      thickness: 1.2,
-      color: Colors.black12,
-    ),
+    dividerTheme: const DividerThemeData(thickness: 1.2, color: Colors.black12),
 
     inputDecorationTheme: InputDecorationTheme(
       filled: true,
-      fillColor: Colors.white,
+      fillColor: const Color(0xFFFFFFFF), // White input fields
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(8),
         borderSide: const BorderSide(color: Colors.grey),
@@ -53,7 +64,9 @@ class AppTheme {
       ),
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(8),
-        borderSide: const BorderSide(color: Colors.blue),
+        borderSide: const BorderSide(
+          color: Color(0xFFB3CDE0),
+        ), // Themed focus color
       ),
     ),
   );
