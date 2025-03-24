@@ -31,79 +31,95 @@ class RobotStatsCard extends StatelessWidget {
           side: BorderSide(color: borderColor, width: 2), // Apply theme border
         ),
         child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Robot Name (Title)
-              Text(
-                "Robot: $robotName",
-                style: theme.textTheme.titleLarge?.copyWith(
-                  fontWeight: FontWeight.bold,
+          padding: const EdgeInsets.all(0),
+          child: Container(
+            padding: const EdgeInsets.all(16),
+            decoration: BoxDecoration(
+              gradient: const LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [
+                  Color.fromARGB(255, 239, 255, 236),
+                  Color.fromARGB(255, 255, 248, 235),
+                ],
+              ),
+              color: const Color.fromARGB(255, 154, 164, 211),
+
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Robot Name (Title)
+                Text(
+                  "Robot: $robotName",
+                  style: theme.textTheme.titleLarge?.copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
-              ),
-              const SizedBox(height: 10),
+                const SizedBox(height: 10),
 
-              // Row for Usage and Power Status
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(
-                    child: Text(
-                      "Usage: $usageStatus",
-                      style: const TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
+                // Row for Usage and Power Status
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Expanded(
+                      child: Text(
+                        "Usage: $usageStatus",
+                        style: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
-                  ),
-                  Expanded(
-                    child: Text(
-                      "Power: $powerStatus",
-                      textAlign: TextAlign.right,
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                        color:
-                            _getPowerColor(), // Changes color based on power level
+                    Expanded(
+                      child: Text(
+                        "Power: $powerStatus",
+                        textAlign: TextAlign.right,
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color:
+                              _getPowerColor(), // Changes color based on power level
+                        ),
                       ),
                     ),
-                  ),
-                ],
-              ),
+                  ],
+                ),
 
-              const SizedBox(height: 10),
-              const Divider(height: 20, thickness: 1),
+                const SizedBox(height: 10),
+                const Divider(height: 20, thickness: 1),
 
-              // Row for Charts (Placeholder)
-              Row(
-                children: [
-                  Expanded(
-                    child: _buildChartPlaceholder("Chart 1", borderColor),
-                  ),
-                  const SizedBox(width: 10),
-                  Expanded(
-                    child: _buildChartPlaceholder("Chart 2", borderColor),
-                  ),
-                ],
-              ),
+                // Row for Charts (Placeholder)
+                Row(
+                  children: [
+                    Expanded(
+                      child: _buildChartPlaceholder("Chart 1", borderColor),
+                    ),
+                    const SizedBox(width: 10),
+                    Expanded(
+                      child: _buildChartPlaceholder("Chart 2", borderColor),
+                    ),
+                  ],
+                ),
 
-              const SizedBox(height: 10),
-              const Divider(height: 20, thickness: 1),
+                const SizedBox(height: 10),
+                const Divider(height: 20, thickness: 1),
 
-              // Row for Charts (Placeholder)
-              Row(
-                children: [
-                  Expanded(
-                    child: _buildChartPlaceholder("Chart 3", borderColor),
-                  ),
-                  const SizedBox(width: 10),
-                  Expanded(
-                    child: _buildChartPlaceholder("Chart 4", borderColor),
-                  ),
-                ],
-              ),
-            ],
+                // Row for Charts (Placeholder)
+                Row(
+                  children: [
+                    Expanded(
+                      child: _buildChartPlaceholder("Chart 3", borderColor),
+                    ),
+                    const SizedBox(width: 10),
+                    Expanded(
+                      child: _buildChartPlaceholder("Chart 4", borderColor),
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),

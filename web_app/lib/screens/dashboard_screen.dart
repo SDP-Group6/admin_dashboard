@@ -65,36 +65,57 @@ class _DashboardScreenState extends State<DashboardScreen> {
               side: BorderSide(color: borderColor, width: 2), // Themed border
             ),
             child: Padding(
-              padding: const EdgeInsets.all(16),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Text(
-                    "Select Robot:",
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              padding: const EdgeInsets.all(0),
+              child: Container(
+                padding: const EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                  gradient: const LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: [
+                      Color.fromARGB(255, 226, 203, 252),
+                      Color.fromARGB(255, 154, 164, 211),
+                    ],
                   ),
-                  DropdownButton<String>(
-                    value: selectedRobot,
-                    onChanged: (newValue) {
-                      setState(() {
-                        selectedRobot = newValue!;
-                      });
-                    },
-                    items:
-                        robots.map<DropdownMenuItem<String>>((robot) {
-                          return DropdownMenuItem<String>(
-                            value: robot["name"],
-                            child: Text(
-                              robot["name"]!,
-                              style: const TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
+                  color: const Color.fromARGB(255, 154, 164, 211),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Text(
+                      "Select Robot:",
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    DropdownButton<String>(
+                      dropdownColor: Color.fromARGB(255, 191, 191, 191),
+                      value: selectedRobot,
+                      onChanged: (newValue) {
+                        setState(() {
+                          selectedRobot = newValue!;
+                        });
+                      },
+                      items:
+                          robots.map<DropdownMenuItem<String>>((robot) {
+                            return DropdownMenuItem<String>(
+                              value: robot["name"],
+                              child: Text(
+                                robot["name"]!,
+                                style: const TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
-                            ),
-                          );
-                        }).toList(),
-                  ),
-                ],
+                            );
+                          }).toList(),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),

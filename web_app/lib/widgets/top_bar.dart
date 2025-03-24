@@ -18,10 +18,20 @@ class TopBar extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
       decoration: BoxDecoration(
-        color: theme.cardTheme.color, // Use themed background
+        gradient: const LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [
+            Color.fromARGB(255, 226, 203, 252),
+            Color.fromARGB(255, 154, 164, 211),
+          ],
+        ),
+        color: const Color.fromARGB(255, 154, 164, 211),
         borderRadius: BorderRadius.circular(12),
         border: Border.all(color: borderColor, width: 2), // Apply black border
-        boxShadow: const [BoxShadow(blurRadius: 4, color: Colors.black12)],
+        boxShadow: const [
+          BoxShadow(blurRadius: 4, color: Color.fromARGB(31, 209, 29, 29)),
+        ],
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
