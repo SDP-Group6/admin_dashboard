@@ -125,7 +125,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
           // Display the selected robot's stats
           RobotStatsCard(
             robotName: robotStats["name"]!,
-            usageStatus: robotStats["usage"]!,
             powerStatus: robotStats["power"]!,
           ),
         ],
