@@ -6,9 +6,8 @@ class JobsSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context); // Access theme properties
+    final theme = Theme.of(context);
 
-    // Extract border color from theme, fallback to black if not set
     final Color borderColor =
         theme.cardTheme.shape is RoundedRectangleBorder
             ? (theme.cardTheme.shape as RoundedRectangleBorder).side.color
@@ -22,59 +21,68 @@ class JobsSection extends StatelessWidget {
           style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
         ),
         const SizedBox(height: 10),
-        Container(
-          decoration: BoxDecoration(
-            color: theme.cardTheme.color, // Use themed card background
-            borderRadius: BorderRadius.circular(12),
-            border: Border.all(
-              color: borderColor,
-              width: 2,
-            ), // Apply black border
-            boxShadow: const [BoxShadow(blurRadius: 5, color: Colors.black12)],
-          ),
-          child: Column(
-            children:
-                Job.sampleJobs.map((job) {
-                  return Column(
-                    children: [
-                      JobItem(job: job, borderColor: borderColor),
-                      if (job != Job.sampleJobs.last) const Divider(),
-                    ],
-                  );
-                }).toList(),
-          ),
+
+        Column(
+          children:
+              Job.sampleJobs.map((job) {
+                return _jobContainer(child: JobItem(job: job));
+              }).toList(),
         ),
       ],
+    );
+  }
+
+  Widget _jobContainer({required Widget child}) {
+    return Container(
+      margin: const EdgeInsets.symmetric(vertical: 6),
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        gradient: const LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [
+            Color.fromARGB(255, 226, 203, 252),
+            Color.fromARGB(255, 154, 164, 211),
+          ],
+        ),
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: Colors.black, width: 2),
+        boxShadow: const [
+          BoxShadow(blurRadius: 5, color: Colors.black12, offset: Offset(0, 2)),
+        ],
+      ),
+      child: child,
     );
   }
 }
 
 class JobItem extends StatelessWidget {
   final Job job;
-  final Color borderColor;
 
-  const JobItem({super.key, required this.job, required this.borderColor});
+  const JobItem({super.key, required this.job});
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context); // Access theme
-
-    return Container(
-      decoration: BoxDecoration(
-        color: theme.cardTheme.color, // Use themed card background
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: borderColor, width: 2), // Apply black border
-      ),
-      margin: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
-      child: ListTile(
-        title: Text(
-          "${job.title} - ID: ${job.id}",
-          style: const TextStyle(fontWeight: FontWeight.bold),
+    return ListTile(
+      contentPadding: EdgeInsets.zero,
+      title: Text(
+        "${job.title} - ID: ${job.id}",
+        style: const TextStyle(
+          fontWeight: FontWeight.bold,
+          fontSize: 16,
+          color: Colors.black,
         ),
-        subtitle: Text("Status: ${job.status}"),
-        trailing: Text(
-          job.time,
-          style: const TextStyle(fontWeight: FontWeight.bold),
+      ),
+      subtitle: Text(
+        "Status: ${job.status}",
+        style: const TextStyle(fontSize: 14, color: Colors.black87),
+      ),
+      trailing: Text(
+        job.time,
+        style: const TextStyle(
+          fontWeight: FontWeight.bold,
+          fontSize: 14,
+          color: Colors.black,
         ),
       ),
     );

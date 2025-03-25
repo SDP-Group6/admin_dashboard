@@ -9,7 +9,7 @@ class RoomSection extends StatefulWidget {
 }
 
 class _RoomSectionState extends State<RoomSection> {
-  final Map<String, bool> _expandedRooms = {}; // Track expanded state of rooms
+  final Map<String, bool> _expandedRooms = {};
 
   void _toggleExpand(String roomName) {
     setState(() {
@@ -19,9 +19,8 @@ class _RoomSectionState extends State<RoomSection> {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context); // Access theme properties
+    final theme = Theme.of(context);
 
-    // Extract border color from theme, fallback to black if not set
     final Color borderColor =
         theme.cardTheme.shape is RoundedRectangleBorder
             ? (theme.cardTheme.shape as RoundedRectangleBorder).side.color
@@ -35,34 +34,43 @@ class _RoomSectionState extends State<RoomSection> {
           style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
         ),
         const SizedBox(height: 10),
-        Container(
-          decoration: BoxDecoration(
-            color: theme.cardTheme.color, // Use themed card background
-            borderRadius: BorderRadius.circular(12),
-            border: Border.all(
-              color: borderColor,
-              width: 2,
-            ), // Apply black border
-            boxShadow: const [BoxShadow(blurRadius: 5, color: Colors.black12)],
-          ),
-          child: Column(
-            children:
-                Room.sampleRooms.map((room) {
-                  return Column(
-                    children: [
-                      RoomItem(
-                        room: room,
-                        borderColor: borderColor,
-                        isExpanded: _expandedRooms[room.name] ?? false,
-                        onExpand: () => _toggleExpand(room.name),
-                      ),
-                      if (room != Room.sampleRooms.last) const Divider(),
-                    ],
-                  );
-                }).toList(),
-          ),
+        Column(
+          children:
+              Room.sampleRooms.map((room) {
+                return _roomContainer(
+                  child: RoomItem(
+                    room: room,
+                    borderColor: borderColor,
+                    isExpanded: _expandedRooms[room.name] ?? false,
+                    onExpand: () => _toggleExpand(room.name),
+                  ),
+                );
+              }).toList(),
         ),
       ],
+    );
+  }
+
+  Widget _roomContainer({required Widget child}) {
+    return Container(
+      margin: const EdgeInsets.symmetric(vertical: 6),
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        gradient: const LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [
+            Color.fromARGB(255, 226, 203, 252),
+            Color.fromARGB(255, 154, 164, 211),
+          ],
+        ),
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: Colors.black, width: 2),
+        boxShadow: const [
+          BoxShadow(blurRadius: 5, color: Colors.black12, offset: Offset(0, 2)),
+        ],
+      ),
+      child: child,
     );
   }
 }
@@ -83,69 +91,90 @@ class RoomItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context); // Access theme
-
-    return Container(
-      decoration: BoxDecoration(
-        color: theme.cardTheme.color, // Use themed card background
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: borderColor, width: 2), // Apply border color
-      ),
-      margin: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
-      child: Column(
-        children: [
-          ListTile(
-            title: Text(
-              room.name,
-              style: const TextStyle(fontWeight: FontWeight.bold),
-            ),
-            subtitle: Text(room.floor),
-            trailing: ElevatedButton(
-              onPressed: onExpand, // Toggle expanded state
-              child: Text(isExpanded ? "Hide" : "View"),
+    return Column(
+      children: [
+        ListTile(
+          contentPadding: EdgeInsets.zero,
+          title: Text(
+            room.name,
+            style: const TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 18,
+              color: Colors.black,
             ),
           ),
-          if (isExpanded)
-            Padding(
-              padding: const EdgeInsets.all(12.0),
-              child: Column(
-                children: [
-                  // Expandable Section Layout
-                  Row(
-                    children: [
-                      // Chart 1 Placeholder
-                      Expanded(child: _buildChartPlaceholder("Chart 1")),
-                      const SizedBox(width: 10),
-                      // Right Section with 2 Rows
-                      Expanded(
-                        child: Column(
-                          children: [
-                            // Chart 2 Placeholder
-                            _buildChartPlaceholder("Chart 2"),
-                            const SizedBox(height: 10),
-                            // TextBox Placeholder
-                            _buildTextBox("Additional Room Info"),
-                          ],
-                        ),
+          subtitle: Text(
+            room.floor,
+            style: const TextStyle(color: Colors.black87),
+          ),
+          trailing: _gradientButton(
+            label: isExpanded ? "Hide" : "View",
+            onTap: onExpand,
+          ),
+        ),
+        if (isExpanded)
+          Padding(
+            padding: const EdgeInsets.only(top: 16.0),
+            child: Column(
+              children: [
+                Row(
+                  children: [
+                    Expanded(child: _buildChartPlaceholder("Chart 1")),
+                    const SizedBox(width: 10),
+                    Expanded(
+                      child: Column(
+                        children: [
+                          _buildChartPlaceholder("Chart 2"),
+                          const SizedBox(height: 10),
+                          _buildTextBox("Additional Room Info"),
+                        ],
                       ),
-                    ],
-                  ),
-                ],
-              ),
+                    ),
+                  ],
+                ),
+              ],
             ),
-        ],
+          ),
+      ],
+    );
+  }
+
+  Widget _gradientButton({required String label, required VoidCallback onTap}) {
+    return InkWell(
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(8),
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        decoration: BoxDecoration(
+          gradient: const LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [
+              Color.fromRGBO(228, 210, 249, 1),
+              Color.fromARGB(255, 229, 233, 250),
+            ],
+          ),
+          borderRadius: BorderRadius.circular(8),
+          border: Border.all(color: Colors.black),
+        ),
+        child: Text(
+          label,
+          style: const TextStyle(
+            color: Colors.black,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
       ),
     );
   }
 
-  /// Placeholder for charts
   Widget _buildChartPlaceholder(String title) {
     return Container(
       height: 100,
       decoration: BoxDecoration(
         color: Colors.grey[300],
         borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: borderColor, width: 2), // Apply border color
+        border: Border.all(color: borderColor, width: 2),
       ),
       child: Center(
         child: Text(
@@ -156,7 +185,6 @@ class RoomItem extends StatelessWidget {
     );
   }
 
-  /// Text box placeholder
   Widget _buildTextBox(String hintText) {
     return Container(
       height: 40,
@@ -164,7 +192,7 @@ class RoomItem extends StatelessWidget {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: borderColor, width: 2), // Apply border color
+        border: Border.all(color: borderColor, width: 2),
       ),
       child: Align(
         alignment: Alignment.centerLeft,
