@@ -22,7 +22,12 @@ class AppTheme {
 
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
-        backgroundColor: Color(0xFFB3CDE0), // Pastel blue button
+        backgroundColor: Color.fromARGB(
+          255,
+          255,
+          255,
+          255,
+        ), // Pastel blue button
         foregroundColor: Color(0xFF354F52), // Dark text color
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
@@ -30,7 +35,12 @@ class AppTheme {
     ),
 
     cardTheme: CardTheme(
-      color: const Color(0xFFFAFAFA), // Light pastel gray background
+      color: const Color.fromARGB(
+        255,
+        229,
+        237,
+        246,
+      ), // Light pastel gray background
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12),
         side: const BorderSide(
@@ -43,7 +53,7 @@ class AppTheme {
     ),
 
     appBarTheme: const AppBarTheme(
-      backgroundColor: Color(0xFFB3CDE0), // Pastel blue
+      backgroundColor: Color.fromARGB(255, 255, 255, 255), // Pastel blue
       foregroundColor: Colors.white, // White text/icons
       elevation: 0,
       centerTitle: true,
@@ -65,7 +75,7 @@ class AppTheme {
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(8),
         borderSide: const BorderSide(
-          color: Color(0xFFB3CDE0),
+          color: Color.fromARGB(255, 255, 255, 255),
         ), // Themed focus color
       ),
     ),
