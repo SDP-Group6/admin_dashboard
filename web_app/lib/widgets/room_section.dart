@@ -105,7 +105,11 @@ class RoomItem extends StatelessWidget {
           ),
           subtitle: Text(
             room.floor,
-            style: const TextStyle(color: Colors.black87),
+            style: const TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 16,
+              color: Colors.black87,
+            ),
           ),
           trailing: _gradientButton(
             label: isExpanded ? "Hide" : "View",
