@@ -75,7 +75,11 @@ class JobItem extends StatelessWidget {
       ),
       subtitle: Text(
         "Status: ${job.status}",
-        style: const TextStyle(fontSize: 14, color: Colors.black87),
+        style: const TextStyle(
+          fontSize: 14,
+          fontWeight: FontWeight.bold,
+          color: Colors.black87,
+        ),
       ),
       trailing: Text(
         job.time,
