@@ -39,14 +39,7 @@ class _RobotStatsCardState extends State<RobotStatsCard> {
         child: Container(
           padding: const EdgeInsets.all(16),
           decoration: BoxDecoration(
-            gradient: const LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: [
-                Color.fromARGB(255, 239, 255, 236),
-                Color.fromARGB(255, 255, 248, 235),
-              ],
-            ),
+            color: Colors.white,
             borderRadius: BorderRadius.circular(12),
           ),
           child: Column(
@@ -56,6 +49,7 @@ class _RobotStatsCardState extends State<RobotStatsCard> {
                 "Robot: ${widget.robotName}",
                 style: theme.textTheme.titleLarge?.copyWith(
                   fontWeight: FontWeight.bold,
+                  fontSize: 24,
                 ),
               ),
               const SizedBox(height: 10),
@@ -161,15 +155,8 @@ class _RobotStatsCardState extends State<RobotStatsCard> {
     return Container(
       height: 100,
       decoration: BoxDecoration(
+        color: Colors.white70,
         borderRadius: BorderRadius.circular(12),
-        gradient: const LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [
-            Color.fromARGB(255, 222, 235, 255),
-            Color.fromARGB(255, 206, 222, 255),
-          ],
-        ),
         border: Border.all(color: Colors.black, width: 2),
       ),
       padding: const EdgeInsets.all(12),
@@ -350,24 +337,6 @@ class _RobotStatsCardState extends State<RobotStatsCard> {
     if (powerPercentage < 30) return Colors.red;
     if (powerPercentage < 60) return Colors.orange;
     return Colors.green;
-  }
-
-  Widget _buildPlaceholderBox(String content) {
-    return Container(
-      height: 100,
-      decoration: BoxDecoration(
-        color: Colors.grey[300],
-        borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: Colors.black, width: 2),
-      ),
-      child: Center(
-        child: Text(
-          content,
-          style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
-          textAlign: TextAlign.center,
-        ),
-      ),
-    );
   }
 
   Widget _buildChartPlaceholder(String title, Color borderColor) {

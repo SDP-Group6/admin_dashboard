@@ -9,7 +9,6 @@ class DashboardScreen extends StatefulWidget {
 }
 
 class _DashboardScreenState extends State<DashboardScreen> {
-  // List of robots with their stats
   final List<Map<String, String>> robots = [
     {
       "name": "Robot A",
@@ -28,19 +27,16 @@ class _DashboardScreenState extends State<DashboardScreen> {
     },
   ];
 
-  String selectedRobot = "Robot A"; // Default robot selection
+  String selectedRobot = "Robot A";
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context); // Access theme properties
-
-    // Extract border color from theme, fallback to black if not set
+    final theme = Theme.of(context);
     final Color borderColor =
         theme.cardTheme.shape is RoundedRectangleBorder
             ? (theme.cardTheme.shape as RoundedRectangleBorder).side.color
             : Colors.black;
 
-    // Get the selected robot's stats
     final robotStats = robots.firstWhere(
       (robot) => robot["name"] == selectedRobot,
     );
@@ -50,79 +46,58 @@ class _DashboardScreenState extends State<DashboardScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Welcome Message
           const Text(
             "Good Afternoon, Admin!",
-            style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            style: TextStyle(fontSize: 36, fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 20),
-
-          // Robot Selection Card
           Card(
-            elevation: 3, // Adds a shadow effect
+            elevation: 3,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(12),
-              side: BorderSide(color: borderColor, width: 2), // Themed border
+              side: BorderSide(color: borderColor, width: 2),
             ),
             child: Padding(
-              padding: const EdgeInsets.all(0),
-              child: Container(
-                padding: const EdgeInsets.all(16),
-                decoration: BoxDecoration(
-                  gradient: const LinearGradient(
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                    colors: [
-                      Color.fromARGB(255, 226, 203, 252),
-                      Color.fromARGB(255, 154, 164, 211),
-                    ],
+              padding: const EdgeInsets.all(16),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text(
+                    "Select Robot:",
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
-                  color: const Color.fromARGB(255, 154, 164, 211),
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const Text(
-                      "Select Robot:",
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    DropdownButton<String>(
-                      dropdownColor: Color.fromARGB(255, 191, 191, 191),
-                      value: selectedRobot,
-                      onChanged: (newValue) {
-                        setState(() {
-                          selectedRobot = newValue!;
-                        });
-                      },
-                      items:
-                          robots.map<DropdownMenuItem<String>>((robot) {
-                            return DropdownMenuItem<String>(
-                              value: robot["name"],
-                              child: Text(
-                                robot["name"]!,
-                                style: const TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
-                                ),
+                  DropdownButton<String>(
+                    dropdownColor: const Color.fromARGB(255, 191, 191, 191),
+                    value: selectedRobot,
+                    onChanged: (newValue) {
+                      setState(() {
+                        selectedRobot = newValue!;
+                      });
+                    },
+                    items:
+                        robots.map<DropdownMenuItem<String>>((robot) {
+                          return DropdownMenuItem<String>(
+                            value: robot["name"],
+                            child: Text(
+                              robot["name"]!,
+                              style: const TextStyle(
+                                color: Colors.black,
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
                               ),
-                            );
-                          }).toList(),
-                    ),
-                  ],
-                ),
+                            ),
+                          );
+                        }).toList(),
+                  ),
+                ],
               ),
             ),
           ),
-
           const SizedBox(height: 20),
-
-          // Display the selected robot's stats
           RobotStatsCard(
             robotName: robotStats["name"]!,
             powerStatus: robotStats["power"]!,
